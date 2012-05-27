@@ -1,0 +1,13 @@
+name: PridePvP-Games
+main: com.pridemc.Games.Core
+version: 1.0
+commands:
+    pridegames:
+        description: Handles all Pride-Games commands
+        aliases: pg
+        usage: /pg [args]
+permissions:
+    pg.*:
+        children:
+            pg.edit : true
+            pg.join : true
