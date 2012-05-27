@@ -14,11 +14,11 @@ public class BlockListener implements Listener{
 		
 		Player player = event.getPlayer();
 		
-		 List<Integer> blocks = (List<Integer>) Core.config.getIntegerList("Allowed Break Blocks");
+		 List<Integer> blocks = (List<Integer>) Core.config.getIntegerList("Global Breakable Blocks");
 		
 		if(!blocks.contains(event.getBlock().getTypeId())){
 		
-			if(!player.hasPermission("rp.*")){
+			if(!player.hasPermission("pg.edit")){
 			
 			event.setCancelled(true);
 			
@@ -31,7 +31,15 @@ public class BlockListener implements Listener{
 		
 		Player player = event.getPlayer();
 		
-		List<Integer> blocks = (List<Integer>) Core.config.getIntegerList("Allowed Place Blocks");
+		List<Integer> blocks = (List<Integer>) Core.config.getIntegerList("Global Placeable Blocks");
 		
+		if(!blocks.contains(event.getBlock().getTypeId())){
+			
+			if(!player.hasPermission("pg.edit")){
+				
+				event.setCancelled(true);
+				
+			}
+		}
 	}
 }

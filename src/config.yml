@@ -1,3 +1,6 @@
-Allowed Blocks:
-  - 2
-  - 5
+Global Breakable Blocks:
+- 2
+- 5
+Global Placeable Blocks:
+- 2
+- 5

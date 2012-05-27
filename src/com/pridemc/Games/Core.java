@@ -37,9 +37,13 @@ public class Core extends JavaPlugin {
 		
 		getCommand("pridegames").setExecutor(new Commands());
 		
+		getCommand("arena").setExecutor(new AdminCommands());
+		
 		getServer().getPluginManager().registerEvents(new BlockListener(), this);
 		
 		getServer().getPluginManager().registerEvents(new RegionSelection(), this);
+		
+		getServer().getPluginManager().registerEvents(new SignListener(), this);
 		
 	}
 	

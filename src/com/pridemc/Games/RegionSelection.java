@@ -38,7 +38,7 @@ public class RegionSelection implements Listener{
 					
 					max.put(event.getPlayer(), event.getClickedBlock().getLocation());
 					
-					player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + YELLOW + "Position 1 selected");
+					player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Position 1 selected");
 					
 					event.setCancelled(true);
 					
@@ -48,7 +48,7 @@ public class RegionSelection implements Listener{
 					
 					event.setCancelled(true);
 					
-					player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + YELLOW + "Position 2 selected");
+					player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Position 2 selected");
 					
 				}
 			}

@@ -23,51 +23,29 @@ public class Commands implements CommandExecutor {
 			String[] args) {
 
 		Player player = (Player) sender;
+
+		//Core command
 		
 		if(label.equalsIgnoreCase("pridegames") || label.equalsIgnoreCase("pg")){
 			
 			if(args.length == 0){
 				
-				player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + YELLOW + "Please type" 
+				player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Please type" 
 				+ GOLD + " /pg help" + YELLOW + " for a list of commands");
+			
+				//Reloading files
 				
 			}else if(args[0].equalsIgnoreCase("reload") && args.length <= 1){
 				
-				player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + YELLOW + "Reloading config files...");
+				player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Reloading config files...");
 				
 				Core.instance.reloadConfig();
 				
-			}else if(args[0].equalsIgnoreCase("create")){
 				
-				if(args.length > 1 && args.length < 3){
-				
-				String name = args[1];
-				
-				if(RegionSelection.max.containsKey(player)){
-					
-					if(RegionSelection.min.containsKey(player)){
-						
-						player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + YELLOW + "Arena " + name + " succesfully created!");
-						
-						Core.arenas.createSection(name);
-						
-						Core.arenas.set(name + ".max", RegionSelection.max.get(player).toString());
-						
-						Core.arenas.set(name + ".min", RegionSelection.min.get(player).toString());
-						
-					}else{
-							
-						player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + RED + "You haven't properly selected a region");
-							
-						}
-					
-					}else{
-						
-						player.sendMessage(GOLD + "[" + TEAL + "PridePvP Games" + GOLD + "] " + RED + "You haven't properly selected a region");
-						
-					}
-				}
+				//Creating arenas
 			
+			
+				//Deleting arenas
 			}else if(args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("del")){
 				
 				String name = args[1];
@@ -76,7 +54,21 @@ public class Commands implements CommandExecutor {
 					
 					Core.arenas.set(name, null);
 					
+					player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Arena " + name + " has been succesfully removed");
+					
+				}else{
+					
+					player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + RED + "There seems to be no arena called " + name);	
+					
 				}
+			
+				//Listing arenas
+			}else if(args[0].equalsIgnoreCase("list")){
+				
+				//List<String> names = (List<String>) Core.arenas.getConfigurationSection("");
+				
+				player.sendMessage(GOLD + "[" + TEAL + "Pride Games" + GOLD + "] " + YELLOW + "Arenas: " + Core.arenas.getConfigurationSection("").getKeys(false));
+				
 			}
 			
 			try {

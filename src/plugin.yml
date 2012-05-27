@@ -6,6 +6,9 @@ commands:
         description: Handles all Pride-Games commands
         aliases: pg
         usage: /pg [args]
+    arena:
+        description: Handles all Arena-based commands
+        usage: /arena [args]
 permissions:
     pg.*:
         children:
