@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -98,28 +99,51 @@ public class ArenaManagement implements CommandExecutor{
 					}
 				}
 			
-				//Placing spawns
+				//Editing spawns
 			}else if(args[0].equalsIgnoreCase("sp")){
 				
-				if(args.length < 2){
+					if(args[1].equalsIgnoreCase("set")){
 					
 					if(editing.containsKey(sender)){
 						
-						spawnpoints.add(player.getLocation().toVector());
+						spawnpoints.add(player.getLocation().toVector().toBlockVector());
 						
 						Core.arenas.set(editing.get(player) + ".spawnpoints", spawnpoints);
 						
 						Core.arenas.set(editing.get(player) + ".world", player.getWorld().getName());
 						
-						player.sendMessage(ChatColor.GREEN + "Spawn point succesfully set");
-					
+						player.sendMessage(ChatColor.GREEN + "Spawn point added for " + editing.get(player));
+						
+						player.getLocation().getBlock().getRelative(0, -1, 0).setType(Material.GOLD_BLOCK);
+						
 					}else{
 						
 						sender.sendMessage(ChatColor.RED + "You are not editting an arena");
 						
-					}
+						}
 					
-				}
+					}else if(args[1].equalsIgnoreCase("remove")){
+						
+						if(editing.containsKey(sender)){
+							
+						if(Core.arenas.getList(editing.get(player) + ".spawnpoints").contains(player.getLocation().toVector().toBlockVector())){
+							
+							Core.arenas.getList(editing.get(player) + ".spawnpoints").remove(player.getLocation().toVector());
+							
+							player.sendMessage(ChatColor.GREEN + "Spawn point removed for " + editing.get(player));
+					
+							player.getLocation().getBlock().getRelative(0, -1, 0).setType(Material.GRAVEL);
+							
+						}else{
+							
+							player.sendMessage(ChatColor.RED + "Your current position is not a spawn point!");
+							
+							}
+						}else{
+							
+							sender.sendMessage(ChatColor.RED + "You are not editting an arena");
+						}
+					}
 				
 			}else if(args[0].equalsIgnoreCase("delete")){
 				

@@ -61,6 +61,9 @@ public class JoinEvent implements Listener{
 					
 					event.getPlayer().sendMessage(ChatColor.RED + "This event is already in progress!");
 					
+				}else if(players.get(aname).size() > Core.arenas.getInt(aname + ".Max players") && !Core.arenas.getBoolean(aname + ".InProgress")){
+					
+					event.getPlayer().sendMessage(ChatColor.RED + "This event has too many players already!");
 				}
 			}
 		}
