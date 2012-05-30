@@ -1,16 +1,10 @@
-name: PridePvP-Games
-main: com.pridemc.Games.Core
+name: PridePvP Games
+main: com.pridemc.games.Core
 version: 1.0
 commands:
-    pridegames:
-        description: Handles all Pride-Games commands
-        aliases: pg
-        usage: /pg [args]
     arena:
         description: Handles all Arena-based commands
         usage: /arena [args]
-permissions:
-    pg.*:
-        children:
-            pg.edit : true
-            pg.join : true
+    pga:
+        description: Handles all admin commands
+        usage: /pga [args]
