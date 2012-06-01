@@ -5,6 +5,6 @@ commands:
     arena:
         description: Handles all Arena-based commands
         usage: /arena [args]
-    pga:
-        description: Handles all admin commands
-        usage: /pga [args]
+    pg:
+        description: Handles all Player-based commands
+        usage: /pg [args]
