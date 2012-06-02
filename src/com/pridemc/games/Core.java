@@ -12,16 +12,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.pridemc.games.commands.ArenaCommandHandler;
 import com.pridemc.games.commands.PlayerCommandHandler;
+import com.pridemc.games.events.BlockBreak;
+import com.pridemc.games.events.BlockPlace;
+import com.pridemc.games.events.Explosions;
+import com.pridemc.games.events.Join;
+import com.pridemc.games.events.PlayerDeath;
+import com.pridemc.games.events.Quit;
+import com.pridemc.games.events.Teleportation;
 import com.pridemc.games.pluginevents.JoinArena;
 import com.pridemc.games.pluginevents.PortalCreation;
 
-import come.pridemc.games.events.BlockBreak;
-import come.pridemc.games.events.BlockPlace;
-import come.pridemc.games.events.Explosions;
-import come.pridemc.games.events.Join;
-import come.pridemc.games.events.PlayerDeath;
-import come.pridemc.games.events.Quit;
-import come.pridemc.games.events.Teleportation;
 
 public class Core extends JavaPlugin {
 	

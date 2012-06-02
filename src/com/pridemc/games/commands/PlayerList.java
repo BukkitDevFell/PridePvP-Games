@@ -25,14 +25,14 @@ public class PlayerList {
 				if(Core.instance.getPlaying().get(players).equals(Core.instance.getPlaying().get(player))){
 			
 					playerlist.add(players.getDisplayName());
-			
-		sender.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + 
-				ChatColor.YELLOW + "Players in " + Core.instance.getPlaying().get(player) + ": " + playerlist);
-		
-		playerlist.clear();
-		
 				}
 			}
+			
+			sender.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + 
+					ChatColor.YELLOW + "Players in " + Core.instance.getPlaying().get(player) + ": " + playerlist);
+			
+			
+		playerlist.clear();
 			
 		}else{
 			
