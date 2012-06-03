@@ -15,7 +15,10 @@ public class ArenaStartGameTask implements Runnable {
 
 	@Override
 	public void run() {
-		//Change Perm
+		if (ArenaManager.checkEndGameConditions(arena)) {
+			ArenaManager.endGame(arena);
+			return;
+		}
 
 		//
 		arena.setState(Arena.State.RUNNING_GAME);

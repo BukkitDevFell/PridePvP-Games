@@ -69,7 +69,7 @@ public class ArenaManager {
 
 	public static void removePlayerFromArena(Player player) {
 		Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
-		if (arena != null && arena.getState() == Arena.State.RUNNING_GAME) {
+		if (arena != null && !arena.getState().canJoin()) { // If in a game state where the players can't join, then remove the player
 			ArenaManager.cleanUpPlayer(player);
 
 			List<Player> arenaPlayersAlive = ArenaUtil.asBukkitPlayerList(arena.getArenaPlayers());
@@ -80,7 +80,9 @@ public class ArenaManager {
 				player.sendMessage(String.format(msg, player.getName(), arenaPlayersAlive.size()));
 			}
 
-			ArenaManager.checkEndGameConditions(arena);
+			if (ArenaManager.checkEndGameConditions(arena)) {
+				ArenaManager.endGame(arena);
+			}
 		}
 	}
 
@@ -100,26 +102,29 @@ public class ArenaManager {
 		return ConfigUtil.getLocationFromVector(Core.config, "Spawn location", "Spawn world");
 	}
 
-	public static void checkEndGameConditions(Arena arena) {
+	public static boolean checkEndGameConditions(Arena arena) {
 		if (arena.getState() == Arena.State.RUNNING_GAME) {
 			Set<ArenaPlayer> alivePlayers = arena.getArenaPlayers();
 			if (alivePlayers.size() <= 1) {
-				// End of game
-				endGame(arena);
+				return true;
 			}
 		}
+		return false;
 	}
 
-	private static void endGame(Arena arena) {
-		List<ArenaPlayer> alivePlayers = new ArrayList<ArenaPlayer>(arena.getArenaPlayers());
-		Player winningPlayer = alivePlayers.get(0).getPlayer();
+	public static void endGame(Arena arena) {
+		List<ArenaPlayer> alivePlayers = new ArrayList<ArenaPlayer>(arena.getArenaPlayers()); //TODO ?
 
-		// Msg
-		Bukkit.broadcastMessage(String.format("%s won %s!", winningPlayer.getName(), arena.getName()));
+		if (alivePlayers.size() > 0) {
+			Player winningPlayer = alivePlayers.get(0).getPlayer();
 
-		// Cleanup remaining players.
-		for (ArenaPlayer arenaPlayer : alivePlayers) {
-			ArenaManager.cleanUpPlayer(arenaPlayer.getPlayer());
+			// Msg
+			Bukkit.broadcastMessage(String.format("%s won %s!", winningPlayer.getName(), arena.getName()));
+
+			// Cleanup remaining players.
+			for (ArenaPlayer arenaPlayer : alivePlayers) {
+				ArenaManager.cleanUpPlayer(arenaPlayer.getPlayer());
+			}
 		}
 
 		// Cleanup Arena

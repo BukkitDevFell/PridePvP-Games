@@ -16,7 +16,10 @@ public class ArenaGraceTask implements Runnable {
 
 	@Override
 	public void run() {
-		// Change perm
+		if (ArenaManager.checkEndGameConditions(arena)) {
+			ArenaManager.endGame(arena);
+			return;
+		}
 
 		// Teleport Players
 		arena.setPlayerSpawnPoints();
