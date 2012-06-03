@@ -30,11 +30,11 @@ private Map<Player, String> playing = new HashMap<Player, String>();
 
   }
 	
-	public Map<Player, String> getPlaying() {
+	//public Map<Player, String> getPlaying() {
         
-        return playing;
+      //  return playing;
 
-  	}
+  	//}
 	
 	//---------------------------------------------------------------------
 	public static YamlConfiguration arenas;

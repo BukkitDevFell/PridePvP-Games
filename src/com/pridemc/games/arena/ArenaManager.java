@@ -62,13 +62,13 @@ public class ArenaManager {
 	private static void _addPlayerToArena(Player player, Arena arena) {
 		arena.addPlayer(new ArenaPlayer(player));
 		getInstance().playerToArenaMap.put(player.getName(), arena.getName());
-		Core.instance.getPlaying().put(player, arena.getName()); //TODO Legacy
+		//Core.instance.getPlaying().put(player, arena.getName()); //TODO Legacy
 	}
 
 	public static void removePlayerFromArena(Player player, Arena arena) {
 		arena.removePlayer(player.getName());
 		getInstance().playerToArenaMap.remove(player.getName());
-		Core.instance.getPlaying().remove(player); //TODO Legacy
+		//Core.instance.getPlaying().remove(player); //TODO Legacy
 	}
 
 	public static Arena getArenaPlayerIsIn(String playerName) {
@@ -126,5 +126,9 @@ public class ArenaManager {
 	public static void resetArena(String arenaName) {
 		addArena(new Arena(arenaName));
 		//TODO probably more cleanup.
+	}
+
+	public static boolean isInArena(String playerName) {
+		return getInstance().playerToArenaMap.containsKey(playerName);
 	}
 }
