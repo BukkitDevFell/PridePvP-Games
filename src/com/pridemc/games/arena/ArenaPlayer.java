@@ -8,31 +8,31 @@ import org.bukkit.entity.Player;
  * Date: 6/2/12
  */
 public class ArenaPlayer {
-    public enum State {
-        ALIVE,
-        DEAD
-    }
+	public enum State {
+		ALIVE,
+		DEAD
+	}
 
-    String name;
-    State state = State.ALIVE;
+	String name;
+	State state = State.ALIVE;
 
-    public ArenaPlayer(String name) {
-        this.name = name;
-    }
+	public ArenaPlayer(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public State getState() {
-        return state;
-    }
+	public State getState() {
+		return state;
+	}
 
-    public void setState(State state) {
-        this.state = state;
-    }
+	public void setState(State state) {
+		this.state = state;
+	}
 
-    public Player getPlayer() {
-        return Bukkit.getPlayer(getName());
-    }
+	public Player getPlayer() {
+		return Bukkit.getPlayer(getName());
+	}
 }

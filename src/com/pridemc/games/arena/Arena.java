@@ -8,37 +8,37 @@ import java.util.Set;
  * Date: 6/2/12
  */
 public class Arena {
-    public enum State {
-        WAITING_FOR_PLAYERS,
-        INITIAL_GRACE,
-        RUNNING_GAME
-    }
+	public enum State {
+		WAITING_FOR_PLAYERS,
+		INITIAL_GRACE,
+		RUNNING_GAME
+	}
 
-    private String name;
-    private Set<ArenaPlayer> players = new HashSet<ArenaPlayer>();
-    private State state = State.WAITING_FOR_PLAYERS;
+	private String name;
+	private Set<ArenaPlayer> players = new HashSet<ArenaPlayer>();
+	private State state = State.WAITING_FOR_PLAYERS;
 
-    public Arena(String name) {
-        this.name = name;
-    }
+	public Arena(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Set<ArenaPlayer> getPlayers() {
-        return players;
-    }
+	public Set<ArenaPlayer> getPlayers() {
+		return players;
+	}
 
-    public State getState() {
-        return state;
-    }
+	public State getState() {
+		return state;
+	}
 
-    public void setState(State state) {
-        this.state = state;
-    }
+	public void setState(State state) {
+		this.state = state;
+	}
 
-    protected boolean addPlayer(ArenaPlayer arenaPlayer) {
-        return players.add(arenaPlayer);
-    }
+	protected boolean addPlayer(ArenaPlayer arenaPlayer) {
+		return players.add(arenaPlayer);
+	}
 }
