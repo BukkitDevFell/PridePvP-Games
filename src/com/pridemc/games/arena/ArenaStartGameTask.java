@@ -24,6 +24,6 @@ public class ArenaStartGameTask implements Runnable {
 		arena.setState(Arena.State.RUNNING_GAME);
 
 		// Msg
-		Bukkit.broadcastMessage(String.format("Arena [%s] Game Started", arena.getName()));
+		Bukkit.broadcastMessage(String.format("[Arena - %s] Game Started", arena.getName()));
 	}
 }

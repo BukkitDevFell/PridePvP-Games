@@ -1,7 +1,8 @@
 package com.pridemc.games.arena;
 
 import ca.xshade.bukkit.util.TaskInjector;
-import org.bukkit.Bukkit;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -20,7 +21,8 @@ public class ArenaCountdownTask implements Runnable {
 		arena.setState(Arena.State.COUNTING_DOWN);
 
 		// Msg.
-		Bukkit.broadcastMessage(String.format("Arena [%s] Game starts in 3 minute.", arena.getName())); //TODO
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(ArenaConfig.getCountdownDelay());
+		MessageUtil.sendMsgToServer("[Arena - %s] Game starts in %d minute(s).", arena.getName(), minutes);
 
 		//
 		TaskInjector.schedule(new ArenaGraceTask(arena), ArenaConfig.getCountdownDelay());

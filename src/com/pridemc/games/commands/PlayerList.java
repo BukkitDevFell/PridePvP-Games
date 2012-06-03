@@ -1,9 +1,6 @@
 package com.pridemc.games.commands;
 
-import com.pridemc.games.arena.Arena;
-import com.pridemc.games.arena.ArenaConfig;
-import com.pridemc.games.arena.ArenaManager;
-import com.pridemc.games.arena.ArenaUtil;
+import com.pridemc.games.arena.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,16 +10,15 @@ public class PlayerList {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		Player player = (Player) sender;
-		
-		if (ArenaManager.isInArena(player.getName())) {
-			Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
-			String msg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.YELLOW + "Players in %s: %s";
-			sender.sendMessage(String.format(msg, arena.getName(), ArenaUtil.getPlayerDisplayNames(arena)));
+
+
+		if (sender instanceof Player && ArenaManager.isInArena(sender.getName())) {
+			Arena arena = ArenaManager.getArenaPlayerIsIn(sender.getName());
+			String msg = "Players in %s: %s";
+			MessageUtil.sendMsg(sender, msg, arena.getName(), ArenaUtil.getPlayerDisplayNames(arena));
 		} else {
-			
 			sender.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.YELLOW + "Arenas:");
-			
+
 			for(String arenaName : ArenaConfig.getArenaNames()){
 				Arena arena = ArenaManager.getArena(arenaName);
 

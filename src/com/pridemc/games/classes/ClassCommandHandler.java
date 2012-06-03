@@ -35,8 +35,7 @@ public class ClassCommandHandler implements CommandExecutor {
 		
 		Player player = (Player) sender;
 		
-		if(ArenaManager.isInArena(player.getName())
-				&& ArenaManager.getArenaPlayerIsIn(player.getName()).getState().canChangeClass()){
+		if(ArenaManager.isInArena(player.getName()) && ArenaManager.getArenaPlayerIsIn(player.getName()).getState().canChangeClass()){
 		
 		if(args.length > 0){
 			

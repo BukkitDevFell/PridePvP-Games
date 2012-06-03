@@ -1,7 +1,8 @@
 package com.pridemc.games.arena;
 
 import ca.xshade.bukkit.util.TaskInjector;
-import org.bukkit.Bukkit;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -31,7 +32,9 @@ public class ArenaGraceTask implements Runnable {
 		arena.setState(Arena.State.INITIAL_GRACE_PERIOD);
 
 		// Msg.
-		Bukkit.broadcastMessage(String.format("Arena [%s] Grace Period - Game Begins in 1 minute", arena.getName()));
+
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(ArenaConfig.getGracePeriodDelay());
+		MessageUtil.sendMsgToServer("[Arena - %s] Grace Period Started - Game Begins in %s minute(s).", arena.getName(), minutes);
 
 		//
 		TaskInjector.schedule(new ArenaStartGameTask(arena), ArenaConfig.getGracePeriodDelay());

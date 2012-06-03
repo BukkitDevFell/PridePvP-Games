@@ -3,9 +3,9 @@ package com.pridemc.games.arena;
 import ca.xshade.bukkit.util.ConfigUtil;
 import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.Core;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -52,8 +52,8 @@ public class ArenaManager {
 
 
 		// Reaction
-		String msg = "Joined Arena [%s] [%d / %d]";
-		player.sendMessage(String.format(msg, arena.getName(), arena.getArenaPlayers().size(), arena.getMaxNumPlayers()));
+		String msg = "Joined Arena %s [%d / %d]";
+		MessageUtil.sendMsg(player, msg, arena.getName(), arena.getArenaPlayers().size(), arena.getMaxNumPlayers());
 
 		if (arena.getState() == Arena.State.WAITING_FOR_PLAYERS && arena.getArenaPlayers().size() >= arena.getPlayersRequiredToStart()) {
 			// Arena is ready
@@ -73,11 +73,10 @@ public class ArenaManager {
 			ArenaManager.cleanUpPlayer(player);
 
 			List<Player> arenaPlayersAlive = ArenaUtil.asBukkitPlayerList(arena.getArenaPlayers());
+			String msg = ChatColor.AQUA + "%s" + " has died! " + ChatColor.AQUA + "%d" + ChatColor.YELLOW + " players remaining!";
+			MessageUtil.sendMsgToAll(new ArrayList<CommandSender>(arenaPlayersAlive), msg, player.getName(), arenaPlayersAlive.size());
 			for (Player playerInArena : arenaPlayersAlive) {
 				playerInArena.getWorld().createExplosion(playerInArena.getLocation().add(0, 15, 0), 2); // Explosion above player?
-
-				String msg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.AQUA + "%s" + " has died! " + ChatColor.AQUA + "%d" + ChatColor.YELLOW + " players remaining!";
-				player.sendMessage(String.format(msg, player.getName(), arenaPlayersAlive.size()));
 			}
 
 			if (ArenaManager.checkEndGameConditions(arena)) {
@@ -103,7 +102,7 @@ public class ArenaManager {
 	}
 
 	public static boolean checkEndGameConditions(Arena arena) {
-		if (arena.getState() == Arena.State.RUNNING_GAME) {
+		if (!arena.getState().canJoin()) {
 			Set<ArenaPlayer> alivePlayers = arena.getArenaPlayers();
 			if (alivePlayers.size() <= 1) {
 				return true;
@@ -119,12 +118,14 @@ public class ArenaManager {
 			Player winningPlayer = alivePlayers.get(0).getPlayer();
 
 			// Msg
-			Bukkit.broadcastMessage(String.format("%s won %s!", winningPlayer.getName(), arena.getName()));
+			MessageUtil.sendMsgToServer("%s won in the %s arena!", winningPlayer.getDisplayName(), arena.getName());
 
 			// Cleanup remaining players.
 			for (ArenaPlayer arenaPlayer : alivePlayers) {
 				ArenaManager.cleanUpPlayer(arenaPlayer.getPlayer());
 			}
+		} else {
+			MessageUtil.sendMsgToServer("The %s arena ended with no winner.", arena.getName());
 		}
 
 		// Cleanup Arena

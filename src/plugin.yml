@@ -9,3 +9,6 @@ commands:
     pg:
         description: Handles all Player-based commands
         usage: /pg [args]
+    class:
+        description: Handles all Class-based commands
+        usage: /class [args]

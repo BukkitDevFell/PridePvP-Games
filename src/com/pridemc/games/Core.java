@@ -3,6 +3,7 @@ package com.pridemc.games;
 import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.arena.ArenaConfig;
 import com.pridemc.games.arena.ArenaManager;
+import com.pridemc.games.classes.ClassCommandHandler;
 import com.pridemc.games.commands.ArenaCommandHandler;
 import com.pridemc.games.commands.PlayerCommandHandler;
 import com.pridemc.games.events.*;
@@ -56,6 +57,8 @@ public class Core extends JavaPlugin {
 		getCommand("arena").setExecutor(new ArenaCommandHandler());
 		
 		getCommand("pg").setExecutor(new PlayerCommandHandler());
+
+		getCommand("class").setExecutor(new ClassCommandHandler());
 		
 		getServer().getPluginManager().registerEvents(new JoinArena(), this);
 		
@@ -74,6 +77,8 @@ public class Core extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Quit(), this);
 		
 		getServer().getPluginManager().registerEvents(new Teleportation(), this);
+
+		getServer().getPluginManager().registerEvents(new PvP(), this);
 		
 		try {
 
