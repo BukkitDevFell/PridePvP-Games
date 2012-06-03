@@ -108,11 +108,13 @@ public class Arena {
 		}
 	}
 
+
 	public List<Vector> getGameSpawnVectors() {
 		List<Vector> vectors = new ArrayList<Vector>();
 		List configList = Core.arenas.getList(getName() + ".gamepoints");
 		if (configList != null) {
 			//TODO: Fuck this unsafe casting
+			@SuppressWarnings("unchecked")
 			vectors = (List<Vector>)configList;
 		}
 		return vectors;
