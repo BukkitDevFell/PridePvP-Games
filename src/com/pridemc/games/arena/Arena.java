@@ -132,13 +132,7 @@ public class Arena {
 	}
 
 	public List<Player> getBukkitPlayers() {
-		List<Player> bukkitPlayers = new ArrayList<Player>();
-		for (ArenaPlayer arenaPlayer : getArenaPlayers()) {
-			Player player = arenaPlayer.getPlayer();
-			if (player != null)
-				bukkitPlayers.add(player);
-		}
-		return bukkitPlayers;
+		return ArenaUtil.asBukkitPlayerList(getArenaPlayers());
 	}
 
 
@@ -170,18 +164,7 @@ public class Arena {
 
 
 	public void setPlayerAsDead(String playerName) {
-		ArenaPlayer arenaPlayer = getArenaPlayer(playerName);
-		arenaPlayer.setState(ArenaPlayer.State.DEAD);
-	}
-
-	public List<ArenaPlayer> getAlivePlayers() {
-		List<ArenaPlayer> alivePlayers = new ArrayList<ArenaPlayer>();
-		for (ArenaPlayer arenaPlayer : getArenaPlayers()) {
-			if (!arenaPlayer.isAlive())
-				continue;
-			alivePlayers.add(arenaPlayer);
-		}
-		return alivePlayers;
+		arenaPlayers.remove(getArenaPlayer(playerName));
 	}
 
 	public int playersRequiredToStart() {

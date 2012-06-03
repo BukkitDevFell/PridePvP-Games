@@ -1,15 +1,14 @@
 package com.pridemc.games.classes;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.pridemc.games.Core;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassCommandHandler implements CommandExecutor {
 	
@@ -36,7 +35,8 @@ public class ClassCommandHandler implements CommandExecutor {
 		
 		Player player = (Player) sender;
 		
-		if(Core.instance.getPlaying().containsKey(player) && Core.arenas.getInt(Core.instance.getPlaying().get(player) + ".status code") == 0){
+		if(ArenaManager.isInArena(player.getName())
+				&& ArenaManager.getArenaPlayerIsIn(player.getName()).getState().canChangeClass()){
 		
 		if(args.length > 0){
 			

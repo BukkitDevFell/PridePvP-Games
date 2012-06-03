@@ -9,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class PlayerList {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -27,8 +25,7 @@ public class PlayerList {
 			
 			for(String arenaName : Core.arenas.getKeys(false)){
 				Arena arena = ArenaManager.getArena(arenaName);
-				List<String> playerDisplayNames = ArenaUtil.getPlayerDisplayNames(arena);
-						
+
 				if (arena.getState().canJoin()) {
 					String msg = ChatColor.AQUA + "%s" + ChatColor.YELLOW + " : " + ChatColor.GREEN + "OPEN";
 					sender.sendMessage(String.format(msg, arena.getName()));

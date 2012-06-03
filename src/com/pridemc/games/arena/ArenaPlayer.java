@@ -8,13 +8,8 @@ import org.bukkit.entity.Player;
  * Date: 6/2/12
  */
 public class ArenaPlayer {
-	public enum State {
-		ALIVE,
-		DEAD
-	}
 
 	String name;
-	State state = State.ALIVE;
 
 	public ArenaPlayer(Player player) {
 		this.name = player.getName();
@@ -28,14 +23,6 @@ public class ArenaPlayer {
 		return name;
 	}
 
-	public State getState() {
-		return state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
-
 	public Player getPlayer() {
 		return Bukkit.getPlayer(getName());
 	}
@@ -44,7 +31,12 @@ public class ArenaPlayer {
 		return ArenaManager.getArenaPlayerIsIn(getName());
 	}
 
-	public boolean isAlive() {
-		return getState() == State.ALIVE;
+	@Override
+	public boolean equals(Object obj) {
+		return getName().equals(obj);
+	}
+	@Override
+	public int hashCode() {
+		return getName().hashCode();
 	}
 }

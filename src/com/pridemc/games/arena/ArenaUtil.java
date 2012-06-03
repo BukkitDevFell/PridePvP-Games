@@ -17,4 +17,14 @@ public class ArenaUtil {
 		}
 		return playerDisplayNames;
 	}
+
+	public static List<Player> asBukkitPlayerList(Iterable<ArenaPlayer> arenaPlayers) {
+		List<Player> bukkitPlayers = new ArrayList<Player>();
+		for (ArenaPlayer arenaPlayer : arenaPlayers) {
+			Player player = arenaPlayer.getPlayer();
+			if (player != null)
+				bukkitPlayers.add(player);
+		}
+		return bukkitPlayers;
+	}
 }
