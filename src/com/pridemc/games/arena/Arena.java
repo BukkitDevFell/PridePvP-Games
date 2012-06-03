@@ -19,7 +19,7 @@ public class Arena {
 	public enum State {
 		WAITING_FOR_PLAYERS(true, false, true, false),
 		COUNTING_DOWN(true, false, true, false),
-		INITIAL_GRACE(false, true, false, false),
+		INITIAL_GRACE_PERIOD(false, true, false, false),
 		RUNNING_GAME(false, true, false, true);
 
 		private boolean canJoin, canEditBlocks, canChangeClass, canPvP;
@@ -54,17 +54,23 @@ public class Arena {
 	private State state = State.WAITING_FOR_PLAYERS;
 	private Map<ArenaPlayer, Location> playerSpawnPoints = new HashMap<ArenaPlayer, Location>();
 
+	final int DEFAULT_MAX_PLAYERS = 15;
+	final int DEFAULT_PLAYERS_TO_START = 8;
+
 	public Arena(String name) {
 		this.name = name;
-		setState(State.WAITING_FOR_PLAYERS); // Need to write to config - Bleh.
+
 		if(!Core.arenas.getKeys(false).contains(getName())){
 			Core.arenas.createSection(getName());
-			Core.arenas.set(getName() + ".max players", 15);
-			Core.arenas.set(getName() + ".playercount to start", 8);
-			Core.arenas.createSection(getName() + ".spawnpoint");
-			Core.arenas.createSection(getName() + ".world");
-			Core.arenas.set(getName() + ".status code", 0);
 		}
+		Core.arenas.set(getName() + ".max players", getMaxNumPlayers());
+		Core.arenas.set(getName() + ".playercount to start", getPlayersRequiredToStart());
+		if (!Core.arenas.isSet(getName() + ".spawnpoint"))
+			Core.arenas.createSection(getName() + ".spawnpoint");
+		if (!Core.arenas.isSet(getName() + ".world"))
+			Core.arenas.createSection(getName() + ".world");
+		setState(State.WAITING_FOR_PLAYERS);
+		ArenaConfig.saveArenaConfig();
 	}
 
 	public String getName() {
@@ -108,13 +114,13 @@ public class Arena {
 		}
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public List<Vector> getGameSpawnVectors() {
 		List<Vector> vectors = new ArrayList<Vector>();
 		List configList = Core.arenas.getList(getName() + ".gamepoints");
 		if (configList != null) {
 			//TODO: Fuck this unsafe casting
-			@SuppressWarnings("unchecked")
+
 			vectors = (List<Vector>)configList;
 		}
 		return vectors;
@@ -135,7 +141,7 @@ public class Arena {
 	}
 
 	public int getMaxNumPlayers() {
-		return Core.arenas.getInt(getName() + ".max players");
+		return Core.arenas.getInt(getName() + ".max players", DEFAULT_MAX_PLAYERS);
 	}
 
 	public boolean isFull() {
@@ -178,7 +184,7 @@ public class Arena {
 		arenaPlayers.remove(getArenaPlayer(playerName));
 	}
 
-	public int playersRequiredToStart() {
-		return Core.arenas.getInt(getName() + ".playercount to start");
+	public int getPlayersRequiredToStart() {
+		return Core.arenas.getInt(getName() + ".playercount to start", DEFAULT_PLAYERS_TO_START);
 	}
 }

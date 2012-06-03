@@ -10,7 +10,7 @@ public class PortalCreation implements Listener{
 	
 	@EventHandler
 	public void onPortalCreate(SignChangeEvent event){
-		
+
 		if(event.getLine(0).equalsIgnoreCase("[PridePort]")){
 			
 			if(event.getPlayer().hasPermission("pridegames.admin")){

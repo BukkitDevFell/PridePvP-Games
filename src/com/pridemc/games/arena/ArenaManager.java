@@ -51,7 +51,10 @@ public class ArenaManager {
 
 
 		// Reaction
-		if (arena.getState() == Arena.State.WAITING_FOR_PLAYERS && arena.getArenaPlayers().size() > arena.playersRequiredToStart()) {
+		String msg = "Joined Arena [%s] [%d / %d]";
+		player.sendMessage(String.format(msg, arena.getName(), arena.getArenaPlayers().size(), arena.getMaxNumPlayers()));
+
+		if (arena.getState() == Arena.State.WAITING_FOR_PLAYERS && arena.getArenaPlayers().size() >= arena.getPlayersRequiredToStart()) {
 			// Arena is ready
 			TaskInjector.schedule(new ArenaCountdownTask(arena), 0);
 		}

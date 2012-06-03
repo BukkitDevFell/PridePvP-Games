@@ -1,9 +1,9 @@
 package ca.xshade.bukkit.util;
 
+import org.bukkit.plugin.Plugin;
+
 import java.util.Date;
 import java.util.Timer;
-
-import org.bukkit.plugin.Plugin;
 
 /**
  * A middleman manager of a Timer instance that schedules a Runnable in a InjectIntoBukkitTask.
@@ -61,7 +61,7 @@ public class TaskInjector {
 	 * @see java.util.Timer#cancel()
 	 */
 	public static void cancelAll() {
-		getTimer().cancel();
+		TaskInjector.getTimer().cancel();
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.pridemc.games;
 
+import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.arena.ArenaConfig;
 import com.pridemc.games.arena.ArenaManager;
 import com.pridemc.games.commands.ArenaCommandHandler;
@@ -37,7 +38,8 @@ public class Core extends JavaPlugin {
 	public static Core instance;
 	
 	public void onEnable(){
-		
+		TaskInjector.newInstance(this);
+
 		config = (YamlConfiguration) getConfig();
 		
 		instance = this;

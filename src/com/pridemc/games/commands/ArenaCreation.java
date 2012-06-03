@@ -2,6 +2,7 @@ package com.pridemc.games.commands;
 
 import com.pridemc.games.Core;
 import com.pridemc.games.arena.Arena;
+import com.pridemc.games.arena.ArenaConfig;
 import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,7 +30,7 @@ public class ArenaCreation implements CommandExecutor{
 			
 			String aname = args[1];
 			
-			if (!Core.arenas.getKeys(false).contains(aname)) {
+			if (!ArenaConfig.getArenaNames().contains(aname)) {
 
 				ArenaManager.addArena(new Arena(aname));
 			
