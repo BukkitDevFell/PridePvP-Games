@@ -1,6 +1,5 @@
 package com.pridemc.games.arena;
 
-import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -82,12 +80,6 @@ public class Arena {
 
 	public boolean isFull() {
 		return arenaPlayers.size() == getMaxNumPlayers();
-	}
-
-	public void start() {
-		TaskInjector.schedule(new ArenaGraceTask(this), 0);
-		long delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
-		TaskInjector.schedule(new ArenaStartGameTask(this), delay);
 	}
 
 	public List<Player> getBukkitPlayers() {
