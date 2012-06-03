@@ -17,7 +17,7 @@ public class ArenaGraceTask implements Runnable {
 	public void run() {
 		// Change perm
 
-		// Teleport
+		// Teleport Players
 		arena.setPlayerSpawnPoints();
 		arena.teleportAllToGameSpawnPoint();
 

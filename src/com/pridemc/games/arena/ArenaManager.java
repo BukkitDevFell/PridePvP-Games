@@ -1,6 +1,9 @@
 package com.pridemc.games.arena;
 
+import ca.xshade.bukkit.util.ConfigUtil;
 import ca.xshade.bukkit.util.TaskInjector;
+import com.pridemc.games.Core;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -26,17 +29,17 @@ public class ArenaManager {
 
 	public static void addPlayerToArena(Player player, String arenaName) throws Exception {
 		Arena arena = getArena(arenaName);
-		addPlayerToArena(player.getName(), arena);
+		addPlayerToArena(player, arena);
 	}
 
 	// Use this method for future proofing
 	// Eg: a player joins two arenas at once somehow.
-	public static void addPlayerToArena(String playerName, Arena arena) throws Exception {
+	public static void addPlayerToArena(Player player, Arena arena) throws Exception {
 		// Validation
-		if (getInstance().playerToArenaMap.containsKey(playerName))
+		if (getInstance().playerToArenaMap.containsKey(player.getName()))
 			throw new Exception(String.format("%s already belongs to %s while trying to join %s.",
-					playerName,
-					getInstance().playerToArenaMap.get(playerName),
+					player.getName(),
+					getInstance().playerToArenaMap.get(player.getName()),
 					arena.getName()));
 		if (arena.getState() != Arena.State.WAITING_FOR_PLAYERS)
 			throw new Exception(); // Don't need an error. Just don't let player warp through the portal.
@@ -45,8 +48,8 @@ public class ArenaManager {
 
 
 		//
-		arena.addPlayer(new ArenaPlayer(playerName));
-		getInstance().playerToArenaMap.put(playerName, arena.getName());
+		_addPlayerToArena(player, arena);
+
 
 		// Reaction
 		if (arena.isFull()) {
@@ -57,8 +60,30 @@ public class ArenaManager {
 		}
 	}
 
+	private static void _addPlayerToArena(Player player, Arena arena) {
+		arena.addPlayer(new ArenaPlayer(player));
+		getInstance().playerToArenaMap.put(player.getName(), arena.getName());
+		Core.instance.getPlaying().put(player, arena.getName()); //TODO Legacy
+	}
+
+	public static void removePlayerFromArena(Player player, Arena arena) {
+		arena.removePlayer(player.getName());
+		getInstance().playerToArenaMap.remove(player.getName());
+		Core.instance.getPlaying().remove(player); //TODO Legacy
+	}
+
 	public static Arena getArenaPlayerIsIn(String playerName) {
 		String arenaName = getInstance().playerToArenaMap.get(playerName);
 		return getArena(arenaName);
+	}
+
+	public static void setPlayerAsDead(String playerName) {
+		Arena arena = ArenaManager.getArenaPlayerIsIn(playerName);
+		arena.setPlayerAsDead(playerName);
+	}
+
+	//TODO: Move somewhere more specific.
+	public static Location getGlobalSpawnPoint() {
+		return ConfigUtil.getLocationFromVector(Core.config, "Spawn location", "Spawn world");
 	}
 }

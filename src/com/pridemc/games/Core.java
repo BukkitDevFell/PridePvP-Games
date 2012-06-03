@@ -1,26 +1,19 @@
 package com.pridemc.games;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.pridemc.games.commands.ArenaCommandHandler;
+import com.pridemc.games.commands.PlayerCommandHandler;
+import com.pridemc.games.events.*;
+import com.pridemc.games.pluginevents.JoinArena;
+import com.pridemc.games.pluginevents.PortalCreation;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.pridemc.games.commands.ArenaCommandHandler;
-import com.pridemc.games.commands.PlayerCommandHandler;
-import com.pridemc.games.events.BlockBreak;
-import com.pridemc.games.events.BlockPlace;
-import com.pridemc.games.events.Explosions;
-import com.pridemc.games.events.Join;
-import com.pridemc.games.events.PlayerDeath;
-import com.pridemc.games.events.Quit;
-import com.pridemc.games.events.Teleportation;
-import com.pridemc.games.pluginevents.JoinArena;
-import com.pridemc.games.pluginevents.PortalCreation;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Core extends JavaPlugin {
@@ -41,7 +34,7 @@ private Map<Player, String> playing = new HashMap<Player, String>();
         
         return playing;
 
-  }
+  	}
 	
 	//---------------------------------------------------------------------
 	public static YamlConfiguration arenas;

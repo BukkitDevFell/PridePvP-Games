@@ -1,5 +1,6 @@
 package com.pridemc.games.arena;
 
+import ca.xshade.bukkit.util.ConfigUtil;
 import com.pridemc.games.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,6 +16,7 @@ import java.util.*;
  */
 public class Arena {
 
+
 	public enum State {
 		WAITING_FOR_PLAYERS,
 		INITIAL_GRACE,
@@ -22,6 +24,7 @@ public class Arena {
 	}
 
 	private String name;
+	private Map<String, ArenaPlayer> arenaPlayerMap = new HashMap<String, ArenaPlayer>();
 	private Set<ArenaPlayer> arenaPlayers = new HashSet<ArenaPlayer>();
 	private State state = State.WAITING_FOR_PLAYERS;
 	private Map<ArenaPlayer, Location> playerSpawnPoints = new HashMap<ArenaPlayer, Location>();
@@ -46,8 +49,21 @@ public class Arena {
 		this.state = state;
 	}
 
-	protected boolean addPlayer(ArenaPlayer arenaPlayer) {
-		return arenaPlayers.add(arenaPlayer);
+	protected void addPlayer(ArenaPlayer arenaPlayer) {
+		arenaPlayers.add(arenaPlayer);
+		arenaPlayerMap.put(arenaPlayer.getName(), arenaPlayer);
+	}
+
+	public ArenaPlayer getArenaPlayer(String playerName) {
+		return arenaPlayerMap.get(playerName);
+	}
+
+	public void removePlayer(String playerName) {
+		ArenaPlayer arenaPlayer = getArenaPlayer(playerName);
+		if (arenaPlayer != null) {
+			arenaPlayers.remove(arenaPlayer);
+			arenaPlayerMap.remove(playerName);
+		}
 	}
 
 	public List<Vector> getGameSpawnVectors() {
@@ -69,7 +85,7 @@ public class Arena {
 		World world = getWorld();
 		List<Location> gameSpawnPoints = new ArrayList<Location>();
 		for (Vector vector : getGameSpawnVectors()) {
-			gameSpawnPoints.add(new Location(world, vector.getX(), vector.getY(), vector.getZ()));
+			gameSpawnPoints.add(vector.toLocation(world));
 		}
 		return gameSpawnPoints;
 	}
@@ -113,5 +129,15 @@ public class Arena {
 
 	public void teleportToGameSpawnPoint(ArenaPlayer arenaPlayer) {
 		arenaPlayer.getPlayer().teleport(playerSpawnPoints.get(arenaPlayer));
+	}
+
+	public Location getSpawnPoint() {
+		return ConfigUtil.getLocationFromVector(Core.arenas, getName() + ".spawnpoint", getName() + ".world");
+	}
+
+
+	public void setPlayerAsDead(String playerName) {
+		ArenaPlayer arenaPlayer = getArenaPlayer(playerName);
+		arenaPlayer.setState(ArenaPlayer.State.DEAD);
 	}
 }

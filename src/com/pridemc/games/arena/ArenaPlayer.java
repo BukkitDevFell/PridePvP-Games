@@ -16,6 +16,10 @@ public class ArenaPlayer {
 	String name;
 	State state = State.ALIVE;
 
+	public ArenaPlayer(Player player) {
+		this.name = player.getName();
+	}
+
 	public ArenaPlayer(String name) {
 		this.name = name;
 	}
