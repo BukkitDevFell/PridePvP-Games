@@ -92,9 +92,7 @@ public class ArenaManager {
 	public static void checkEndGameConditions(Arena arena) {
 		if (arena.getState() == Arena.State.RUNNING_GAME) {
 			List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
-			if (alivePlayers.size() > 1) {
-				return;
-			} else {
+			if (alivePlayers.size() <= 1) {
 				// End of game
 				endGame(arena);
 			}
@@ -105,11 +103,17 @@ public class ArenaManager {
 	private static void endGame(Arena arena) {
 		List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
 		Player winningPlayer = alivePlayers.get(0).getPlayer();
+
+		// Msg
 		Bukkit.broadcastMessage(String.format("%s won %s!", winningPlayer.getName(), arena.getName()));
 
+		// Cleanup remaining players.
 		for (ArenaPlayer arenaPlayer : alivePlayers) {
 			ArenaManager.cleanUpPlayer(arenaPlayer.getPlayer());
 		}
+
+		// Cleanup Arena
+		resetArena(arena.getName());
 	}
 
 	public static Arena addArena(Arena arena) {
