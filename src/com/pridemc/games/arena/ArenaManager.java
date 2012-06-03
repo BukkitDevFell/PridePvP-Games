@@ -154,6 +154,8 @@ public class ArenaManager {
 			cleanUpPlayer(player);
 			player.teleport(getGlobalSpawnPoint());
 		}
+
+		RevertManager.revertArena(arena);
 	}
 
 	public static void cleanupAllArenas() {

@@ -5,7 +5,6 @@ import com.pridemc.games.Core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -31,10 +30,12 @@ public class ArenaConfig {
 	}
 
 	public static long getCountdownDelay() {
-		return TimeUnit.MILLISECONDS.convert(3, TimeUnit.MINUTES);
+		return 0;
+		//return TimeUnit.MILLISECONDS.convert(3, TimeUnit.MINUTES);
 	}
 
 	public static long getGracePeriodDelay() {
-		return TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
+		return 0;
+		//return TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
 	}
 }

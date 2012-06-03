@@ -53,6 +53,7 @@ public class Arena {
 	private Set<ArenaPlayer> arenaPlayers = new HashSet<ArenaPlayer>();
 	private State state = State.WAITING_FOR_PLAYERS;
 	private Map<ArenaPlayer, Location> playerSpawnPoints = new HashMap<ArenaPlayer, Location>();
+	public long startTime = -1;
 
 	final int DEFAULT_MAX_PLAYERS = 15;
 	final int DEFAULT_PLAYERS_TO_START = 8;
