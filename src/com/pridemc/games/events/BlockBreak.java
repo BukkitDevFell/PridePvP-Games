@@ -4,6 +4,7 @@ import com.pridemc.games.arena.Arena;
 import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -20,10 +21,9 @@ public class BlockBreak implements Listener{
 		
 		Block block = event.getBlock();
 
-		Arena arena = ArenaManager.getArenaPlayerIsIn(event.getPlayer().getName());
-
-		if (arena != null) { // Player is in an arena.
-
+		Player player = event.getPlayer();
+		if (ArenaManager.isInArena(player.getName())) {
+			Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
 			if (arena.getState().canEditBlocks()) { // The arena is allowing editing
 
 				broken.put(block.getLocation(), block.getTypeId());

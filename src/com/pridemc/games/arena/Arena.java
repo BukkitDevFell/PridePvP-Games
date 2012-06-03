@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class Arena {
 
-
 	public enum State {
 		WAITING_FOR_PLAYERS(true, false, true, false),
 		COUNTING_DOWN(true, false, true, false),
@@ -61,6 +60,10 @@ public class Arena {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getNumPlayers() {
+		return getArenaPlayers().size();
 	}
 
 	public Set<ArenaPlayer> getArenaPlayers() {
