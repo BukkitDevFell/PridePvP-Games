@@ -29,7 +29,7 @@ public class JoinArena implements Listener{
 					try {
 						ArenaManager.addPlayerToArena(newplayer, arenaName);
 					} catch (Exception e) {
-						e.printStackTrace(); // Send player msg
+						e.printStackTrace(); //TODO: Send player msg
 					}
 
 				}

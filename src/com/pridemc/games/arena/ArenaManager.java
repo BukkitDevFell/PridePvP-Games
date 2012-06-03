@@ -1,9 +1,11 @@
 package com.pridemc.games.arena;
 
+import ca.xshade.bukkit.util.TaskInjector;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -48,7 +50,10 @@ public class ArenaManager {
 
 		// Reaction
 		if (arena.isFull()) {
-			arena.start();
+			// Arena is ready
+			TaskInjector.schedule(new ArenaGraceTask(arena), 0);
+			long delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES); //TODO: should be configurable
+			TaskInjector.schedule(new ArenaStartGameTask(arena), delay);
 		}
 	}
 

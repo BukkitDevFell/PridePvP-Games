@@ -1,5 +1,6 @@
 package com.pridemc.games.arena;
 
+import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,12 +9,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
  * Date: 6/2/12
  */
 public class Arena {
+
 	public enum State {
 		WAITING_FOR_PLAYERS,
 		INITIAL_GRACE,
@@ -82,12 +85,9 @@ public class Arena {
 	}
 
 	public void start() {
-		// Change perm
-
-		// Teleport
-		setState(State.INITIAL_GRACE);
-		// Msg.
-
+		TaskInjector.schedule(new ArenaGraceTask(this), 0);
+		long delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
+		TaskInjector.schedule(new ArenaStartGameTask(this), delay);
 	}
 
 	public List<Player> getBukkitPlayers() {
@@ -98,5 +98,19 @@ public class Arena {
 				bukkitPlayers.add(player);
 		}
 		return bukkitPlayers;
+	}
+
+
+	public void setPlayerSpawnPoints() {
+		List<Location> spawnPoints = getGameSpawnPoints();
+		List<ArenaPlayer> players = new ArrayList<ArenaPlayer>(getArenaPlayers());
+		Collections.shuffle(spawnPoints);
+
+		//TODO: Check that spawnPoints.size() > players.size();
+
+		for (int i = 0; i < players.size(); i++) {
+			playerSpawnPoints.put(players.get(i), spawnPoints.get(i));
+		}
+
 	}
 }
