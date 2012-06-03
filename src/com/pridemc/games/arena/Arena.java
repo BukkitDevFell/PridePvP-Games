@@ -18,9 +18,35 @@ public class Arena {
 
 
 	public enum State {
-		WAITING_FOR_PLAYERS,
-		INITIAL_GRACE,
-		RUNNING_GAME
+		WAITING_FOR_PLAYERS(true, false, true, false),
+		COUNTING_DOWN(true, false, true, false),
+		INITIAL_GRACE(false, true, false, false),
+		RUNNING_GAME(false, true, false, true);
+
+		private boolean canJoin, canEditBlocks, canChangeClass, canPvP;
+
+		private State(boolean canJoin, boolean canEditBlocks, boolean canChangeClass, boolean canPvP) {
+			this.canJoin = canJoin;
+			this.canEditBlocks = canEditBlocks;
+			this.canChangeClass = canChangeClass;
+			this.canPvP = canPvP;
+		}
+
+		public boolean canJoin() {
+			return canJoin;
+		}
+
+		public boolean canEditBlocks() {
+			return canEditBlocks;
+		}
+
+		public boolean canChangeClass() {
+			return canChangeClass;
+		}
+
+		public boolean canPvP() {
+			return canPvP;
+		}
 	}
 
 	private String name;
@@ -95,7 +121,7 @@ public class Arena {
 	}
 
 	public boolean isFull() {
-		return arenaPlayers.size() == getMaxNumPlayers();
+		return arenaPlayers.size() >= getMaxNumPlayers();
 	}
 
 	public List<Player> getBukkitPlayers() {
@@ -149,5 +175,9 @@ public class Arena {
 			alivePlayers.add(arenaPlayer);
 		}
 		return alivePlayers;
+	}
+
+	public int playersRequiredToStart() {
+		return Core.arenas.getInt(getName() + ".playercount to start");
 	}
 }

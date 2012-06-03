@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -43,8 +42,8 @@ public class ArenaManager {
 					player.getName(),
 					getInstance().playerToArenaMap.get(player.getName()),
 					arena.getName()));
-		if (arena.getState() != Arena.State.WAITING_FOR_PLAYERS)
-			throw new Exception(); // Don't need an error. Just don't let player warp through the portal.
+		if (!arena.getState().canJoin())
+			throw new Exception(String.format("%s is already in progress", arena.getName())); // Don't need an error. Just don't let player warp through the portal.
 		if (arena.isFull())
 			throw new Exception(String.format("%s is already full", arena.getName()));
 
@@ -54,11 +53,9 @@ public class ArenaManager {
 
 
 		// Reaction
-		if (arena.isFull()) {
+		if (arena.getState() == Arena.State.WAITING_FOR_PLAYERS && arena.getArenaPlayers().size() > arena.playersRequiredToStart()) {
 			// Arena is ready
-			TaskInjector.schedule(new ArenaGraceTask(arena), 0);
-			long delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES); //TODO: should be configurable
-			TaskInjector.schedule(new ArenaStartGameTask(arena), delay);
+			TaskInjector.schedule(new ArenaCountdownTask(arena), 0);
 		}
 	}
 
@@ -124,7 +121,6 @@ public class ArenaManager {
 		Arena arena = getArenaPlayerIsIn(player.getName());
 		arena.setPlayerAsDead(player.getName());
 		player.getInventory().clear();
-		player.teleport(ArenaManager.getGlobalSpawnPoint());
 	}
 
 	public static void resetArena(String arenaName) {
