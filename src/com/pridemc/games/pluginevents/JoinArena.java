@@ -13,13 +13,13 @@ public class JoinArena implements Listener{
 	@EventHandler
 	public void onPortalStep(PlayerMoveEvent event){
 		
-		Player newplayer = event.getPlayer();
+		Player newPlayer = event.getPlayer();
 		
 		for(Integer i = 0; i <= 3; i++){
 			
-			if(newplayer.getLocation().add(0, -i, 0).getBlock().getType().equals(Material.SIGN_POST)){
+			if(newPlayer.getLocation().add(0, -i, 0).getBlock().getType().equals(Material.SIGN_POST)){
 				
-				Sign sign = (Sign) newplayer.getLocation().add(0, -i, 0).getBlock().getState();
+				Sign sign = (Sign) newPlayer.getLocation().add(0, -i, 0).getBlock().getState();
 				
 				if(sign.getLine(0).equalsIgnoreCase("[PridePort]")){
 				
@@ -27,7 +27,7 @@ public class JoinArena implements Listener{
 
 
 					try {
-						ArenaManager.addPlayerToArena(newplayer, arenaName);
+						ArenaManager.addPlayerToArena(newPlayer, arenaName);
 					} catch (Exception e) {
 						e.printStackTrace(); //TODO: Send player msg
 					}
