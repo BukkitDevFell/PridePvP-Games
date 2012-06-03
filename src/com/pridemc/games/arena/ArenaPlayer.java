@@ -35,4 +35,8 @@ public class ArenaPlayer {
 	public Player getPlayer() {
 		return Bukkit.getPlayer(getName());
 	}
+
+	public Arena getArena() {
+		return ArenaManager.getArenaPlayerIsIn(getName());
+	}
 }

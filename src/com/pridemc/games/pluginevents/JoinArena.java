@@ -24,8 +24,14 @@ public class JoinArena implements Listener{
 				if(sign.getLine(0).equalsIgnoreCase("[PridePort]")){
 				
 					String arenaName = sign.getLine(1); //This is the arena name right here
-					ArenaManager.addPlayerToArena(newplayer, arenaName);
-						
+
+
+					try {
+						ArenaManager.addPlayerToArena(newplayer, arenaName);
+					} catch (Exception e) {
+						e.printStackTrace(); // Send player msg
+					}
+
 				}
 			}
 		}

@@ -4,12 +4,10 @@ import com.pridemc.games.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -23,8 +21,9 @@ public class Arena {
 	}
 
 	private String name;
-	private Set<ArenaPlayer> players = new HashSet<ArenaPlayer>();
+	private Set<ArenaPlayer> arenaPlayers = new HashSet<ArenaPlayer>();
 	private State state = State.WAITING_FOR_PLAYERS;
+	private Map<ArenaPlayer, Location> playerSpawnPoints = new HashMap<ArenaPlayer, Location>();
 
 	public Arena(String name) {
 		this.name = name;
@@ -34,20 +33,20 @@ public class Arena {
 		return name;
 	}
 
-	public Set<ArenaPlayer> getPlayers() {
-		return players;
+	public Set<ArenaPlayer> getArenaPlayers() {
+		return arenaPlayers;
 	}
 
 	public State getState() {
 		return state;
 	}
 
-	public void setState(State state) {
+	protected void setState(State state) {
 		this.state = state;
 	}
 
 	protected boolean addPlayer(ArenaPlayer arenaPlayer) {
-		return players.add(arenaPlayer);
+		return arenaPlayers.add(arenaPlayer);
 	}
 
 	public List<Vector> getGameSpawnVectors() {
@@ -72,5 +71,32 @@ public class Arena {
 			gameSpawnPoints.add(new Location(world, vector.getX(), vector.getY(), vector.getZ()));
 		}
 		return gameSpawnPoints;
+	}
+
+	public int getMaxNumPlayers() {
+		return Core.arenas.getInt(getName() + ".max players");
+	}
+
+	public boolean isFull() {
+		return arenaPlayers.size() == getMaxNumPlayers();
+	}
+
+	public void start() {
+		// Change perm
+
+		// Teleport
+		setState(State.INITIAL_GRACE);
+		// Msg.
+
+	}
+
+	public List<Player> getBukkitPlayers() {
+		List<Player> bukkitPlayers = new ArrayList<Player>();
+		for (ArenaPlayer arenaPlayer : getArenaPlayers()) {
+			Player player = arenaPlayer.getPlayer();
+			if (player != null)
+				bukkitPlayers.add(player);
+		}
+		return bukkitPlayers;
 	}
 }
