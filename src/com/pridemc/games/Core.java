@@ -88,6 +88,8 @@ public class Core extends JavaPlugin {
 	
 	public void onDisable(){
 
+		TaskInjector.cancelAll();
+
 		ArenaManager.cleanupAllArenas();
 		
 		getLogger().info("is disabled");

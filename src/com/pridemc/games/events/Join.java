@@ -12,16 +12,6 @@ public class Join implements Listener{
 	public void onPlayerJoin(PlayerJoinEvent event){
 
 		Player player = event.getPlayer();
-		if(ArenaManager.isInArena(player.getName())){
-
-			player.teleport(ArenaManager.getGlobalSpawnPoint());
-			
-		}
-		
-		/*
-		 * Teleport player to Spawn
-		 */
-
-
+		player.teleport(ArenaManager.getGlobalSpawnPoint());
 	}
 }

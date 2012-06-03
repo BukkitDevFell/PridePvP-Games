@@ -22,25 +22,18 @@ public class BlockBreak implements Listener{
 		Block block = event.getBlock();
 
 		Player player = event.getPlayer();
+
+		if (player.hasPermission("pridegames.admin"))
+			return;
+
 		if (ArenaManager.isInArena(player.getName())) {
 			Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
 			if (arena.getState().canEditBlocks()) { // The arena is allowing editing
-
-				broken.put(block.getLocation(), block.getTypeId());
-				
-			} else {
-				
-				if (!event.getPlayer().hasPermission("pridegames.admin")) {
-					
-					event.setCancelled(true);
-					
-				}
+				broken.put(block.getLocation(), block.getTypeId()); //TODO
+				return;
 			}
 		}
-		
-		/*
-		 * Make sure the players are in an arena and make sure the arena's match has started, else, deny
-		 */
-		
+
+		event.setCancelled(true);
 	}
 }

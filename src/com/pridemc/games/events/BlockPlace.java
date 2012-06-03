@@ -22,26 +22,20 @@ public class BlockPlace implements Listener {
 		Block block = event.getBlock();
 
 		Player player = event.getPlayer();
+
+		if (player.hasPermission("pridegames.admin"))
+			return;
+
 		if (ArenaManager.isInArena(player.getName())) {
 			Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
 			if (arena.getState().canEditBlocks()) { // The arena is allowing editing
 				
-				placed.put(block.getLocation(), 0);
+				placed.put(block.getLocation(), 0); //TODO
+				return;
 				
-			}else{
-				
-				if(!event.getPlayer().hasPermission("pridegames.admin")){
-					
-					event.setCancelled(true);
-					
-				}
 			}
 		}
-		
-		
-		/*
-		 * Make sure the players are in an arena and make sure the arena's match has started, else, deny
-		 */
-		
+
+		event.setCancelled(true);
 	}
 }
