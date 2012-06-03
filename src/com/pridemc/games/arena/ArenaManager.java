@@ -7,9 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: Chris H (Zren / Shade)
@@ -88,17 +86,16 @@ public class ArenaManager {
 
 	public static void checkEndGameConditions(Arena arena) {
 		if (arena.getState() == Arena.State.RUNNING_GAME) {
-			List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
+			Set<ArenaPlayer> alivePlayers = arena.getArenaPlayers();
 			if (alivePlayers.size() <= 1) {
 				// End of game
 				endGame(arena);
 			}
-
 		}
 	}
 
 	private static void endGame(Arena arena) {
-		List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
+		List<ArenaPlayer> alivePlayers = new ArrayList<ArenaPlayer>(arena.getArenaPlayers());
 		Player winningPlayer = alivePlayers.get(0).getPlayer();
 
 		// Msg
@@ -124,11 +121,28 @@ public class ArenaManager {
 	}
 
 	public static void resetArena(String arenaName) {
+		cleanupArena(getArena(arenaName));
 		addArena(new Arena(arenaName));
-		//TODO probably more cleanup.
 	}
 
 	public static boolean isInArena(String playerName) {
 		return getInstance().playerToArenaMap.containsKey(playerName);
+	}
+
+	public static void cleanupArena(Arena arena) {
+		for (Player player : ArenaUtil.asBukkitPlayerList(arena.getArenaPlayers())) {
+			cleanUpPlayer(player);
+			player.teleport(getGlobalSpawnPoint());
+		}
+	}
+
+	public static void cleanupAllArenas() {
+		for (Arena arena : getArenas()) {
+			cleanupArena(arena);
+		}
+	}
+
+	public static Collection<Arena> getArenas() {
+		return getInstance().arenaMap.values();
 	}
 }

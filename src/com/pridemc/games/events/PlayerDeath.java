@@ -24,19 +24,17 @@ public class PlayerDeath implements Listener{
 		Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
 		if (arena != null && arena.getState() == Arena.State.RUNNING_GAME) {
 			ArenaPlayer arenaPlayer = arena.getArenaPlayer(player.getName());
-			if (arenaPlayer.getState() == ArenaPlayer.State.ALIVE) {
-				ArenaManager.cleanUpPlayer(player);
+			ArenaManager.cleanUpPlayer(player);
 
-				List<Player> arenaPlayersAlive = ArenaUtil.asBukkitPlayerList(arena.getAlivePlayers());
-				for (Player playerInArena : arenaPlayersAlive) {
-					playerInArena.getWorld().createExplosion(playerInArena.getLocation().add(0, 15, 0), 2); // Explosion above player?
+			List<Player> arenaPlayersAlive = ArenaUtil.asBukkitPlayerList(arena.getArenaPlayers());
+			for (Player playerInArena : arenaPlayersAlive) {
+				playerInArena.getWorld().createExplosion(playerInArena.getLocation().add(0, 15, 0), 2); // Explosion above player?
 
-					String msg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.AQUA + "%s" + " has died! " + ChatColor.AQUA + "%d" + ChatColor.YELLOW + " players remaining!";
-					player.sendMessage(String.format(msg, player.getName(), arenaPlayersAlive.size()));
-				}
-
-				ArenaManager.checkEndGameConditions(arena);
+				String msg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.AQUA + "%s" + " has died! " + ChatColor.AQUA + "%d" + ChatColor.YELLOW + " players remaining!";
+				player.sendMessage(String.format(msg, player.getName(), arenaPlayersAlive.size()));
 			}
+
+			ArenaManager.checkEndGameConditions(arena);
 		}
 	}
 }

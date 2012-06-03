@@ -56,6 +56,7 @@ public class Arena {
 
 	public Arena(String name) {
 		this.name = name;
+		setState(State.WAITING_FOR_PLAYERS); // Need to write to config - Bleh.
 	}
 
 	public String getName() {

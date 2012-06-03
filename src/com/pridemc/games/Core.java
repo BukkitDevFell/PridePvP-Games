@@ -1,11 +1,11 @@
 package com.pridemc.games;
 
+import com.pridemc.games.arena.ArenaManager;
 import com.pridemc.games.commands.ArenaCommandHandler;
 import com.pridemc.games.commands.PlayerCommandHandler;
 import com.pridemc.games.events.*;
 import com.pridemc.games.pluginevents.JoinArena;
 import com.pridemc.games.pluginevents.PortalCreation;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,21 +20,13 @@ public class Core extends JavaPlugin {
 	
 	//HashMaps----------------------------------------------------------
 	
-private Map<Player, String> editing = new HashMap<Player, String>();
-
-private Map<Player, String> playing = new HashMap<Player, String>();
+	private Map<Player, String> editing = new HashMap<Player, String>();
 	
 	public Map<Player, String> getEditing() {
         
         return editing;
 
-  }
-	
-	//public Map<Player, String> getPlaying() {
-        
-      //  return playing;
-
-  	//}
+  	}
 	
 	//---------------------------------------------------------------------
 	public static YamlConfiguration arenas;
@@ -91,14 +83,8 @@ private Map<Player, String> playing = new HashMap<Player, String>();
 	}
 	
 	public void onDisable(){
-		
-		for(Player players : getPlaying().keySet()){
-			
-			getPlaying().remove(players);
-			
-			players.teleport(config.getVector("Spawn location").toLocation(Bukkit.getServer().getWorld(config.getString("Spawn world"))));
-			
-		}
+
+		ArenaManager.cleanupAllArenas();
 		
 		getLogger().info("is disabled");
 		
