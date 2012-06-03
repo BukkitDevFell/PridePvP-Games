@@ -73,6 +73,10 @@ public class Arena {
 
 	protected void setState(State state) {
 		this.state = state;
+
+		//Persist it? all the other code looks at it. <- Bad reason.
+		//TODO Remove this retarded node
+		Core.arenas.set(getName() + ".status code", getState().ordinal());
 	}
 
 	protected void addPlayer(ArenaPlayer arenaPlayer) {
