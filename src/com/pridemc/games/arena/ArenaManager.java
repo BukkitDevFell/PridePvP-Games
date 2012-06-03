@@ -3,10 +3,12 @@ package com.pridemc.games.arena;
 import ca.xshade.bukkit.util.ConfigUtil;
 import ca.xshade.bukkit.util.TaskInjector;
 import com.pridemc.games.Core;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -85,5 +87,44 @@ public class ArenaManager {
 	//TODO: Move somewhere more specific.
 	public static Location getGlobalSpawnPoint() {
 		return ConfigUtil.getLocationFromVector(Core.config, "Spawn location", "Spawn world");
+	}
+
+	public static void checkEndGameConditions(Arena arena) {
+		if (arena.getState() == Arena.State.RUNNING_GAME) {
+			List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
+			if (alivePlayers.size() > 1) {
+				return;
+			} else {
+				// End of game
+				endGame(arena);
+			}
+
+		}
+	}
+
+	private static void endGame(Arena arena) {
+		List<ArenaPlayer> alivePlayers = arena.getAlivePlayers();
+		Player winningPlayer = alivePlayers.get(0).getPlayer();
+		Bukkit.broadcastMessage(String.format("%s won %s!", winningPlayer.getName(), arena.getName()));
+
+		for (ArenaPlayer arenaPlayer : alivePlayers) {
+			ArenaManager.cleanUpPlayer(arenaPlayer.getPlayer());
+		}
+	}
+
+	public static Arena addArena(Arena arena) {
+		return getInstance().arenaMap.put(arena.getName(), arena);
+	}
+
+	public static void cleanUpPlayer(Player player) {
+		Arena arena = getArenaPlayerIsIn(player.getName());
+		arena.setPlayerAsDead(player.getName());
+		player.getInventory().clear();
+		player.teleport(ArenaManager.getGlobalSpawnPoint());
+	}
+
+	public static void resetArena(String arenaName) {
+		addArena(new Arena(arenaName));
+		//TODO probably more cleanup.
 	}
 }

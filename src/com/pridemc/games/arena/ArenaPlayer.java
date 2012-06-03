@@ -43,4 +43,8 @@ public class ArenaPlayer {
 	public Arena getArena() {
 		return ArenaManager.getArenaPlayerIsIn(getName());
 	}
+
+	public boolean isAlive() {
+		return getState() == State.ALIVE;
+	}
 }

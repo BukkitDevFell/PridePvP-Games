@@ -1,7 +1,9 @@
 package com.pridemc.games.events;
 
 import com.pridemc.games.Core;
+import com.pridemc.games.arena.Arena;
 import com.pridemc.games.arena.ArenaManager;
+import com.pridemc.games.arena.ArenaPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,11 +45,14 @@ public class PlayerDeath implements Listener{
 		 */
 
 		Player player = event.getEntity();
-		ArenaManager.setPlayerAsDead(player.getName());
-		player.getInventory().clear();
-		player.teleport(ArenaManager.getGlobalSpawnPoint());
+		Arena arena = ArenaManager.getArenaPlayerIsIn(player.getName());
 
-
-		
+		if (arena != null && arena.getState() == Arena.State.RUNNING_GAME) {
+			ArenaPlayer arenaPlayer = arena.getArenaPlayer(player.getName());
+			if (arenaPlayer.getState() == ArenaPlayer.State.ALIVE) {
+				ArenaManager.cleanUpPlayer(player);
+				ArenaManager.checkEndGameConditions(arena);
+			}
+		}
 	}
 }

@@ -140,4 +140,14 @@ public class Arena {
 		ArenaPlayer arenaPlayer = getArenaPlayer(playerName);
 		arenaPlayer.setState(ArenaPlayer.State.DEAD);
 	}
+
+	public List<ArenaPlayer> getAlivePlayers() {
+		List<ArenaPlayer> alivePlayers = new ArrayList<ArenaPlayer>();
+		for (ArenaPlayer arenaPlayer : getArenaPlayers()) {
+			if (!arenaPlayer.isAlive())
+				continue;
+			alivePlayers.add(arenaPlayer);
+		}
+		return alivePlayers;
+	}
 }
