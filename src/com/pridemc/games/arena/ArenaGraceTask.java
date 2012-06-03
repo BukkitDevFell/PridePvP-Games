@@ -19,6 +19,7 @@ public class ArenaGraceTask implements Runnable {
 
 		// Teleport
 		arena.setPlayerSpawnPoints();
+		arena.teleportAllToGameSpawnPoint();
 
 		//
 		arena.setState(Arena.State.INITIAL_GRACE);

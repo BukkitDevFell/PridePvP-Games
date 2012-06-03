@@ -103,6 +103,15 @@ public class Arena {
 		for (int i = 0; i < players.size(); i++) {
 			playerSpawnPoints.put(players.get(i), spawnPoints.get(i));
 		}
+	}
 
+	public void teleportAllToGameSpawnPoint() {
+		for (ArenaPlayer arenaPlayer : getArenaPlayers()) {
+			teleportToGameSpawnPoint(arenaPlayer);
+		}
+	}
+
+	public void teleportToGameSpawnPoint(ArenaPlayer arenaPlayer) {
+		arenaPlayer.getPlayer().teleport(playerSpawnPoints.get(arenaPlayer));
 	}
 }
