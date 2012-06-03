@@ -37,4 +37,8 @@ public class Arena {
     public void setState(State state) {
         this.state = state;
     }
+
+    protected boolean addPlayer(ArenaPlayer arenaPlayer) {
+        return players.add(arenaPlayer);
+    }
 }

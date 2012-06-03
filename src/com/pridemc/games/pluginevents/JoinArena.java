@@ -1,5 +1,6 @@
 package com.pridemc.games.pluginevents;
 
+import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class JoinArena implements Listener{
 				if(sign.getLine(0).equalsIgnoreCase("[PridePort]")){
 				
 					String arenaName = sign.getLine(1); //This is the arena name right here
-					
+                    ArenaManager.addPlayerToArena(newplayer, arenaName);
 						
 				}
 			}

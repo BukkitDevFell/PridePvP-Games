@@ -1,5 +1,7 @@
 package com.pridemc.games.arena;
 
+import org.bukkit.entity.Player;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +21,14 @@ public class ArenaManager {
         return getInstance().arenaMap.get(name);
     }
 
-    public static Arena put(Arena arena) {
-        return getInstance().arenaMap.put(arena.getName(), arena);
+    public static void addPlayerToArena(Player player, String arenaName) {
+        Arena arena = getArena(arenaName);
+        addPlayerToArena(player.getName(), arena);
+    }
+
+    // Use this method for future proofing
+    // Eg: a player joins two arenas at once somehow.
+    public static void addPlayerToArena(String playerName, Arena arena) {
+        arena.addPlayer(new ArenaPlayer(playerName));
     }
 }
