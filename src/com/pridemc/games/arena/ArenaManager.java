@@ -110,8 +110,8 @@ public class ArenaManager {
 		resetArena(arena.getName());
 	}
 
-	public static Arena addArena(Arena arena) {
-		return getInstance().arenaMap.put(arena.getName(), arena);
+	public static void addArena(Arena arena) {
+		getInstance().arenaMap.put(arena.getName(), arena);
 	}
 
 	public static void cleanUpPlayer(Player player) {

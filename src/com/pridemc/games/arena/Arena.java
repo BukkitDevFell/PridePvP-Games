@@ -57,6 +57,14 @@ public class Arena {
 	public Arena(String name) {
 		this.name = name;
 		setState(State.WAITING_FOR_PLAYERS); // Need to write to config - Bleh.
+		if(!Core.arenas.getKeys(false).contains(getName())){
+			Core.arenas.createSection(getName());
+			Core.arenas.set(getName() + ".max players", 15);
+			Core.arenas.set(getName() + ".playercount to start", 8);
+			Core.arenas.createSection(getName() + ".spawnpoint");
+			Core.arenas.createSection(getName() + ".world");
+			Core.arenas.set(getName() + ".status code", 0);
+		}
 	}
 
 	public String getName() {

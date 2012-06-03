@@ -1,5 +1,6 @@
 package com.pridemc.games;
 
+import com.pridemc.games.arena.ArenaConfig;
 import com.pridemc.games.arena.ArenaManager;
 import com.pridemc.games.commands.ArenaCommandHandler;
 import com.pridemc.games.commands.PlayerCommandHandler;
@@ -42,6 +43,7 @@ public class Core extends JavaPlugin {
 		instance = this;
 		
 		arenas = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "arenas.yml"));
+		ArenaConfig.loadArenas();
 		
 		//getConfig().options().copyDefaults(true);
 		

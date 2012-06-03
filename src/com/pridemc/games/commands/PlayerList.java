@@ -1,7 +1,7 @@
 package com.pridemc.games.commands;
 
-import com.pridemc.games.Core;
 import com.pridemc.games.arena.Arena;
+import com.pridemc.games.arena.ArenaConfig;
 import com.pridemc.games.arena.ArenaManager;
 import com.pridemc.games.arena.ArenaUtil;
 import org.bukkit.ChatColor;
@@ -23,7 +23,7 @@ public class PlayerList {
 			
 			sender.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + ChatColor.YELLOW + "Arenas:");
 			
-			for(String arenaName : Core.arenas.getKeys(false)){
+			for(String arenaName : ArenaConfig.getArenaNames()){
 				Arena arena = ArenaManager.getArena(arenaName);
 
 				if (arena.getState().canJoin()) {
