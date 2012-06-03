@@ -14,10 +14,7 @@ public class Teleportation implements Listener{
 		
 		if(event.getCause().equals(TeleportCause.COMMAND)){
 			Player player = event.getPlayer();
-			player.getInventory().clear();
-			if (ArenaManager.isInArena(player.getName())) {
-				ArenaManager.cleanUpPlayer(player);
-			}
+			ArenaManager.removePlayerFromArena(player);
 		}
 	}
 }
