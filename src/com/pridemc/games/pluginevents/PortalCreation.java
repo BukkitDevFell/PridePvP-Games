@@ -1,11 +1,10 @@
 package com.pridemc.games.pluginevents;
 
+import com.pridemc.games.arena.ArenaConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
-
-import com.pridemc.games.Core;
 
 public class PortalCreation implements Listener{
 	
@@ -18,7 +17,7 @@ public class PortalCreation implements Listener{
 				
 				String aname = event.getLine(1);
 				
-				if(Core.arenas.getKeys(false).contains(aname)){
+				if(ArenaConfig.getArenaNames().contains(aname)){
 					
 					event.getPlayer().sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + 
 					
