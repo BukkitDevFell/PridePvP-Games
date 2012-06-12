@@ -1,24 +1,23 @@
 package com.pridemc.games.pluginevents;
 
+import com.pridemc.games.arena.ArenaConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
-import com.pridemc.games.Core;
-
 public class PortalCreation implements Listener{
 	
 	@EventHandler
 	public void onPortalCreate(SignChangeEvent event){
-		
+
 		if(event.getLine(0).equalsIgnoreCase("[PridePort]")){
 			
 			if(event.getPlayer().hasPermission("pridegames.admin")){
 				
 				String aname = event.getLine(1);
 				
-				if(Core.arenas.getKeys(false).contains(aname)){
+				if(ArenaConfig.getArenaNames().contains(aname)){
 					
 					event.getPlayer().sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + 
 					
