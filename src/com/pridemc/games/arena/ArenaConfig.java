@@ -12,6 +12,12 @@ import java.util.concurrent.TimeUnit;
  * Date: 6/2/12
  */
 public class ArenaConfig {
+	public static final long DEFAULT_GRACE_PERIOD = TimeUnit.SECONDS.convert(1, TimeUnit.MINUTES);
+	public static final long DEFAULT_COUNTDOWN = TimeUnit.SECONDS.convert(3, TimeUnit.MINUTES);
+	public static final String NODE_GRACE_PERIOD = "grace period";
+	public static final String NODE_COUNTDOWN = "countdown";
+
+
 	public static Set<String> getArenaNames() {
 		return Core.arenas.getKeys(false);
 	}
@@ -31,12 +37,14 @@ public class ArenaConfig {
 	}
 
 	public static long getCountdownDelay() {
-		return TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
-		//return TimeUnit.MILLISECONDS.convert(3, TimeUnit.MINUTES);
+		if (!Core.arenas.isSet(NODE_COUNTDOWN))
+			Core.arenas.set(NODE_COUNTDOWN, DEFAULT_COUNTDOWN);
+		return TimeUnit.MILLISECONDS.convert(Core.arenas.getLong(NODE_COUNTDOWN, DEFAULT_GRACE_PERIOD), TimeUnit.SECONDS);
 	}
 
 	public static long getGracePeriodDelay() {
-		return TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
-		//return TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
+		if (!Core.arenas.isSet(NODE_GRACE_PERIOD))
+			Core.arenas.set(NODE_GRACE_PERIOD, DEFAULT_GRACE_PERIOD);
+		return TimeUnit.MILLISECONDS.convert(Core.arenas.getLong(NODE_GRACE_PERIOD, DEFAULT_GRACE_PERIOD), TimeUnit.SECONDS);
 	}
 }

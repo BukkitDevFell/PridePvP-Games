@@ -31,12 +31,13 @@ public class ArenaGraceTask implements Runnable {
 		//
 		arena.setState(Arena.State.INITIAL_GRACE_PERIOD);
 
-		// Msg.
+		long delayMillis = ArenaConfig.getGracePeriodDelay();
 
-		long minutes = TimeUnit.MILLISECONDS.toMinutes(ArenaConfig.getGracePeriodDelay());
+		// Msg.
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(delayMillis);
 		MessageUtil.sendMsgToServer("[Arena - %s] Grace Period Started - Game Begins in %s minute(s).", arena.getName(), minutes);
 
 		//
-		TaskInjector.schedule(new ArenaStartGameTask(arena), ArenaConfig.getGracePeriodDelay());
+		TaskInjector.schedule(new ArenaStartGameTask(arena), delayMillis);
 	}
 }
