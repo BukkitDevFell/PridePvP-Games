@@ -1,5 +1,6 @@
 package com.pridemc.games.pluginevents;
 
+import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -12,19 +13,26 @@ public class JoinArena implements Listener{
 	@EventHandler
 	public void onPortalStep(PlayerMoveEvent event){
 		
-		Player newplayer = event.getPlayer();
+		Player newPlayer = event.getPlayer();
 		
 		for(Integer i = 0; i <= 3; i++){
 			
-			if(newplayer.getLocation().add(0, -i, 0).getBlock().getType().equals(Material.SIGN_POST)){
+			if(newPlayer.getLocation().add(0, -i, 0).getBlock().getType().equals(Material.SIGN_POST)){
 				
-				Sign sign = (Sign) newplayer.getLocation().add(0, -i, 0).getBlock().getState();
+				Sign sign = (Sign) newPlayer.getLocation().add(0, -i, 0).getBlock().getState();
 				
 				if(sign.getLine(0).equalsIgnoreCase("[PridePort]")){
 				
-					String aname = sign.getLine(1); //This is the arena name right here
-					
-						
+					String arenaName = sign.getLine(1); //This is the arena name right here
+
+
+					try {
+						ArenaManager.addPlayerToArena(newPlayer, arenaName);
+					} catch (Exception e) {
+						//System.out.println(e.getMessage());
+						//e.printStackTrace();
+					}
+
 				}
 			}
 		}

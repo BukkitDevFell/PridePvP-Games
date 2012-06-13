@@ -1,6 +1,7 @@
 name: PridePvP Games
 main: com.pridemc.games.Core
 version: 1.0
+depend: [HawkEye]
 commands:
     arena:
         description: Handles all Arena-based commands
@@ -8,3 +9,6 @@ commands:
     pg:
         description: Handles all Player-based commands
         usage: /pg [args]
+    class:
+        description: Handles all Class-based commands
+        usage: /class [args]

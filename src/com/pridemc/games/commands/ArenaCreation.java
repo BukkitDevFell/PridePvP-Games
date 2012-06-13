@@ -1,13 +1,17 @@
 package com.pridemc.games.commands;
 
-import java.io.File;
-import java.io.IOException;
+import com.pridemc.games.Core;
+import com.pridemc.games.arena.Arena;
+import com.pridemc.games.arena.ArenaConfig;
+import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.pridemc.games.Core;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ArenaCreation implements CommandExecutor{
 	
@@ -26,32 +30,21 @@ public class ArenaCreation implements CommandExecutor{
 			
 			String aname = args[1];
 			
-			if(!Core.arenas.getKeys(false).contains(aname)){
+			if (!ArenaConfig.getArenaNames().contains(aname)) {
+
+				ArenaManager.addArena(new Arena(aname));
 			
-			Core.arenas.createSection(aname);
-			
-			Core.arenas.set(aname + ".max players", 15);
-			
-			Core.arenas.set(aname + ".playercount to start", 8);
-			
-			Core.arenas.createSection(aname + ".spawnpoint");
-			
-			Core.arenas.createSection(aname + ".world");
-			
-			Core.arenas.set(aname + ".status code", 0);
-			
-			Core.instance.getEditing().put(player, aname);
-			
-			player.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " + 
-			ChatColor.YELLOW +	"New arena " + aname + " succesfully created! You are now editing this arena as well. To stop editting, type" + ChatColor.GOLD + " /arena edit");
-			
-			
-			}else{
+				Core.instance.getEditing().put(player, aname);
+
+				player.sendMessage(ChatColor.GOLD + "[" + ChatColor.AQUA + "Pride Games" + ChatColor.GOLD + "] " +
+				ChatColor.YELLOW +	"New arena " + aname + " succesfully created! You are now editing this arena as well. To stop editting, type" + ChatColor.GOLD + " /arena edit");
+
+			} else {
 				
-			sender.sendMessage(ChatColor.RED + "There is already an arena called " + aname + ". If you'd like to remove this arena type /arena remove " + aname + ".");
+				sender.sendMessage(ChatColor.RED + "There is already an arena called " + aname + ". If you'd like to remove this arena type /arena remove " + aname + ".");
 				
-				}
 			}
+		}
 		
 		try {
 
