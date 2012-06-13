@@ -1,24 +1,22 @@
 package com.pridemc.games.commands;
 
-import org.bukkit.Bukkit;
+import com.pridemc.games.arena.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import com.pridemc.games.Core;
 
 public class PlayerLeave {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		Player player = (Player) sender;
-		
-		if(Core.instance.getPlaying().containsKey(player)){
+
+		if (ArenaManager.isInArena(player.getName())) {
+
+			ArenaManager.cleanUpPlayer(player);
 			
-			Core.instance.getPlaying().remove(player);
-			
-			player.teleport(Core.config.getVector("Spawn location").toLocation(Bukkit.getServer().getWorld(Core.config.getString("Spawn world"))));
+			player.teleport(ArenaManager.getGlobalSpawnPoint());
 			
 		}else{
 			
