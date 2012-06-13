@@ -2,7 +2,6 @@ package com.pridemc.games.arena;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Vector;
 import uk.co.oliwali.HawkEye.*;
 import uk.co.oliwali.HawkEye.callbacks.RollbackCallback;
 import uk.co.oliwali.HawkEye.database.SearchQuery;
@@ -26,8 +25,8 @@ public class RevertManager {
 
 		//Setup a SearchParser instance and set values
 		SearchParser parser = new SearchParser();
-		parser.minLoc = new Vector(Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE);
-		parser.maxLoc = new Vector(Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE);
+		parser.minLoc = arena.getRegionMinimum();
+		parser.maxLoc = arena.getRegionMaximum();
 		parser.worlds = new String[]{arena.getWorld().getName()};
 		parser.actions = Arrays.asList(new DataType[]{DataType.BLOCK_BREAK, DataType.BLOCK_PLACE});
 

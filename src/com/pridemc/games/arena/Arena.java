@@ -70,6 +70,8 @@ public class Arena {
 			Core.arenas.createSection(getName() + ".spawnpoint");
 		if (!Core.arenas.isSet(getName() + ".world"))
 			Core.arenas.createSection(getName() + ".world");
+		Core.arenas.set(getName() + ".region.min", getRegionMinimum());
+		Core.arenas.set(getName() + ".region.max", getRegionMaximum());
 		setState(State.WAITING_FOR_PLAYERS);
 		ArenaConfig.saveArenaConfig();
 	}
@@ -187,5 +189,13 @@ public class Arena {
 
 	public int getPlayersRequiredToStart() {
 		return Core.arenas.getInt(getName() + ".playercount to start", DEFAULT_PLAYERS_TO_START);
+	}
+
+	public Vector getRegionMinimum() {
+		return Core.arenas.getVector(getName() + ".region.min", new Vector());
+	}
+
+	public Vector getRegionMaximum() {
+		return Core.arenas.getVector(getName() + ".region.max", new Vector());
 	}
 }
